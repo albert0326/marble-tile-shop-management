@@ -33,26 +33,34 @@ function Navigation() {
               Products
             </NavLink>
           </NavItem>
-          <NavItem>
-            <NavLink tag={Link} to="/sales">
-              Sales
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink tag={Link} to="/customers">
-              Customers
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink tag={Link} to="/login">
-              Login
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink tag={Link} to="/register">
-              Register
-            </NavLink>
-          </NavItem>
+          {isLoggedIn && (
+            <>
+              <NavItem>
+                <NavLink tag={Link} to="/sales">
+                  Sales
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink tag={Link} to="/customers">
+                  Customers
+                </NavLink>
+              </NavItem>
+            </>
+          )}
+          {!isLoggedIn && (
+            <>
+              <NavItem>
+                <NavLink tag={Link} to="/login">
+                  Login
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink tag={Link} to="/register">
+                  Register
+                </NavLink>
+              </NavItem>
+            </>
+          )}
         </Nav>
       </Collapse>
       {isLoggedIn && <LogoutButton />}
