@@ -8,6 +8,9 @@ import Home from "./pages/Home";
 import Products from "./pages/Products";
 import Sales from "./pages/Sales";
 import Customers from "./pages/Customers";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -17,8 +20,16 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
-          <Route path="/sales" element={<Sales />} />
-          <Route path="/customers" element={<Customers />} />
+          <Route
+            path="/sales"
+            element={<ProtectedRoute element={<Sales />} />}
+          />
+          <Route
+            path="/customers"
+            element={<ProtectedRoute element={<Customers />} />}
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </Container>
     </Router>

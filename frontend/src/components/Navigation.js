@@ -11,11 +11,14 @@ import {
   NavItem,
   NavLink,
 } from "reactstrap";
+import { useAuth } from "../AuthContext";
+import LogoutButton from "./LogoutButton";
 
 function Navigation() {
   const [isOpen, setIsOpen] = React.useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
+  const { isLoggedIn } = useAuth();
 
   return (
     <Navbar color="light" light expand="md">
@@ -40,8 +43,19 @@ function Navigation() {
               Customers
             </NavLink>
           </NavItem>
+          <NavItem>
+            <NavLink tag={Link} to="/login">
+              Login
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink tag={Link} to="/register">
+              Register
+            </NavLink>
+          </NavItem>
         </Nav>
       </Collapse>
+      {isLoggedIn && <LogoutButton />}
     </Navbar>
   );
 }
