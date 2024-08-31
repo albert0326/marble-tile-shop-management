@@ -41,6 +41,13 @@ const productSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  inventoryHistory: [
+    {
+      date: { type: Date, default: Date.now },
+      quantityChanged: Number,
+      reason: String, // e.g., "Sale", "Restock", etc.
+    },
+  ],
 });
 
 const Product = mongoose.model("Product", productSchema);

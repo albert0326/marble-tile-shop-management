@@ -3,10 +3,17 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 require("dotenv").config();
+const morgan = require("morgan");
+const logger = require("./utils/logger");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(
+  morgan("combined", {
+    stream: { write: (message) => logger.info(message.trim()) },
+  })
+);
 
 // Import routes
 const productRoutes = require("./routes/products");
