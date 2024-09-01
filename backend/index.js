@@ -20,12 +20,14 @@ const productRoutes = require("./routes/products");
 const customerRoutes = require("./routes/customers");
 const saleRoutes = require("./routes/sales");
 const userRoutes = require("./routes/users");
+const categoryRoutes = require("./routes/categories");
 
 // Use routes
 app.use("/api/products", productRoutes);
 app.use("/api/customers", customerRoutes);
 app.use("/api/sales", saleRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/categories", categoryRoutes);
 
 // Database connection
 mongoose

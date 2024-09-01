@@ -22,6 +22,11 @@ const productSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Category", // Reference to the Category model
+    required: true,
+  },
   stock: {
     type: Number,
     required: true,
