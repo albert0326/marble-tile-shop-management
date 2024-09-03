@@ -2,7 +2,6 @@
 
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { Container } from "reactstrap";
 import Navigation from "./components/Navigation";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
