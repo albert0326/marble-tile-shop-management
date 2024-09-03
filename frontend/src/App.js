@@ -16,7 +16,7 @@ function App() {
   return (
     <Router>
       <Navigation />
-      <Container className="mt-4">
+      <div className="p-2 w-100">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
@@ -31,7 +31,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
-      </Container>
+      </div>
     </Router>
   );
 }

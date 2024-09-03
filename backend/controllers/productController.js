@@ -4,8 +4,70 @@ const Product = require("../models/Product");
 // Get all products
 exports.getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find().populate("category");
-    res.json(products);
+    const {
+      search,
+      sort,
+      type,
+      size,
+      color,
+      category,
+      minPrice,
+      maxPrice,
+      minStock,
+      maxStock,
+      page = 1,
+      limit = 10,
+    } = req.query;
+
+    // Building the filter object
+    let filter = {};
+
+    // Adding search functionality
+    if (search) {
+      filter.name = { $regex: search, $options: "i" }; // Case-insensitive search on the name field
+    }
+
+    // Adding filtering functionality
+    if (type) filter.type = type;
+    if (size) filter.size = size;
+    if (color) filter.color = color;
+    if (category) filter.category = category;
+    if (minPrice) filter.price = { ...filter.price, $gte: Number(minPrice) };
+    if (maxPrice) filter.price = { ...filter.price, $lte: Number(maxPrice) };
+    if (minStock) filter.stock = { ...filter.stock, $gte: Number(minStock) };
+    if (maxStock) filter.stock = { ...filter.stock, $lte: Number(maxStock) };
+
+    // Adding sorting functionality
+    let sortOption = {};
+    if (sort) {
+      const [field, order] = sort.split(":");
+      sortOption[field] = order === "desc" ? -1 : 1;
+    } else {
+      sortOption.createdAt = -1; // Default sort by creation date descending
+    }
+
+    // Pagination setup
+    const pageNumber = parseInt(page, 10);
+    const pageSize = parseInt(limit, 10);
+    const skip = (pageNumber - 1) * pageSize;
+
+    // Fetching products with filter, sort, and pagination
+    const products = await Product.find(filter)
+      .sort(sortOption)
+      .skip(skip)
+      .limit(pageSize)
+      .populate("category");
+
+    // Get total count for pagination
+    const totalCount = await Product.countDocuments(filter);
+
+    // Sending response with products and pagination data
+    res.status(200).json({
+      products,
+      totalPages: Math.ceil(totalCount / pageSize),
+      currentPage: pageNumber,
+      totalProducts: totalCount,
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
